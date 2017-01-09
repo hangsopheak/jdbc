@@ -9,6 +9,10 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.Properties;
+
+import org.apache.commons.dbcp2.BasicDataSource;
+import org.apache.commons.dbcp2.BasicDataSourceFactory;
 
 /**
  * @author sopheamak
@@ -45,8 +49,19 @@ public class JdbcPrepareStatement {
          */
         JdbcPrepareStatement jdbc = new JdbcPrepareStatement();
        // jdbc.readData();
+        long start = System.currentTimeMillis();
+        for(int i=0; i<1500;i++) {
+            jdbc.writeData("my test message " + i);
+        }
+        System.out.println("time take :" + (System.currentTimeMillis() - start) + " millis");
         
-        //jdbc.writeData("my test message");
+        
+//        start = System.currentTimeMillis();
+//        for(int i=0; i<1500;i++) {
+//            jdbc.writeDataWithDSConnection("ds my test message " + i);
+//        }
+//        System.out.println("time take :" + (System.currentTimeMillis() - start) + " millis");
+//        
         
         //readMessageProcedure
         String message = jdbc.readMessageProcedure(2);
@@ -71,6 +86,34 @@ public class JdbcPrepareStatement {
             close();
         }
     }
+    public void writeDataWithDSConnection(String message) throws Exception {
+        try {
+            Properties props = new Properties();
+            props.setProperty("driverClassName", "com.mysql.jdbc.Driver");
+            props.setProperty("url", "jdbc:mysql://localhost:3306/test?autoReconnect=true");
+            props.setProperty("username", "root");
+            props.setProperty("password", "root");
+
+            // set datasource
+            BasicDataSource ds = BasicDataSourceFactory.createDataSource(props);
+            connection = ds.getConnection();
+
+            // insert sql using prepared statement
+            preparedStatement = connection.prepareStatement("insert into test_table values (default, ?)");
+            // set parameter
+            preparedStatement.setString(1, message); //set message
+            preparedStatement.executeUpdate();
+            System.out.println("Insert record successfully -" + message);
+        }
+        finally {
+            if (resultSet != null) {
+                resultSet.close();
+            }
+            if (statement != null) {
+                statement.close();
+            }
+        }
+    }
     
     public void writeData(String message) throws Exception {
         try {
@@ -84,7 +127,7 @@ public class JdbcPrepareStatement {
             // set parameter
             preparedStatement.setString(1, message); //set message
             preparedStatement.executeUpdate();
-           
+            System.out.println("Insert record successfully -" + message);
         }
         finally {
             close();

@@ -15,6 +15,15 @@
     <param-value>/opt/tomcat/apache-tomcat-7.0.65/uploads/</param-value> 
     </context-param>
    
+     <filter>
+        <filter-name>tracerFilter</filter-name>
+        <filter-class>com.rupp.sample.servlet.TracerFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>tracerFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+    
     <servlet>
         <servlet-name>ReadDataServlet</servlet-name>
         <servlet-class>com.rupp.sample.servlet.ReadDataServlet</servlet-class>

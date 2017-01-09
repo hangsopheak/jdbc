@@ -89,7 +89,7 @@ public class SampleSqlSelect {
         final List<TestDomain> list = new ArrayList<>();
         try {
             // get Connection from datasource
-            connection = DataSourceUtils.getConnection();
+            connection = DBCP2DataSourceUtils.getConnection();
             // create statement
             statement = connection.createStatement();
             // execute select statement
@@ -103,6 +103,7 @@ public class SampleSqlSelect {
                 //add TestDomain to List
                 list.add(new TestDomain(id, message));
             }
+            //DBCP2DataSourceUtils.printDataSourceState();
         } catch (Exception e) {
             e.printStackTrace();
         }
