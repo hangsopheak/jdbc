@@ -10,7 +10,7 @@ import javax.sql.DataSource;
 
 import org.apache.commons.dbcp2.BasicDataSourceFactory;
 
-public class ConnectionPool {
+public class DataSourceUtils {
     private static DataSource ds = null;
     static {
         String propsFile = "db.properties";
@@ -32,7 +32,7 @@ public class ConnectionPool {
     public static void main(String[] args) throws Exception {
         try {
             // connection
-            Connection con = ConnectionPool.getConnection();
+            Connection con = DataSourceUtils.getConnection();
             // statement
             Statement statement = con.createStatement();
             // execute select statement

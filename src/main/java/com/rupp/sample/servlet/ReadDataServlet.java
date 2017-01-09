@@ -39,7 +39,7 @@ public class ReadDataServlet extends HttpServlet {
         
         try {
             //get records from database talbe
-            List<TestDomain> results = sampleSqlSelect.readData();
+            List<TestDomain> results = sampleSqlSelect.readDataFromDataSource();
             
             out.print("<table width='500px' border='1'>");
             out.print("<tr bgcolor='gray'><td>Id</td><td>message</td></tr>");

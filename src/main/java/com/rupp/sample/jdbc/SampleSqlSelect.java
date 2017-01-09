@@ -54,9 +54,7 @@ public class SampleSqlSelect {
         //jdbc.writeData("my test message");
         
     }
-
-
-    // SQL Select
+ // SQL Select
     public List<TestDomain> readData() throws Exception {
         final List<TestDomain> list = new ArrayList<>();
         try {
@@ -64,6 +62,34 @@ public class SampleSqlSelect {
             Class.forName(jdbcDriverStr);
             // load connection driver
             connection = DriverManager.getConnection(jdbcURL, username, pwd);
+            // create statement
+            statement = connection.createStatement();
+            // execute select statement
+            resultSet = statement.executeQuery("select * from test_table;");
+
+            // get result
+            while (resultSet.next()) {
+                Integer id = resultSet.getInt("id");
+                String message = resultSet.getString("message");
+                System.out.println("id:" + id + ", message:" + message);
+                //add TestDomain to List
+                list.add(new TestDomain(id, message));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        finally {
+            close();
+        }
+        return list;
+    }
+
+    // SQL Select
+    public List<TestDomain> readDataFromDataSource() throws Exception {
+        final List<TestDomain> list = new ArrayList<>();
+        try {
+            // get Connection from datasource
+            connection = DataSourceUtils.getConnection();
             // create statement
             statement = connection.createStatement();
             // execute select statement
