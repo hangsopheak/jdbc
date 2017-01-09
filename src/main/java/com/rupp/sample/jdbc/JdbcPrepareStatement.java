@@ -14,7 +14,7 @@ import java.sql.Statement;
  * @author sopheamak
  *
  */
-public class JdbcTest {
+public class JdbcPrepareStatement {
 
     private final String jdbcDriverStr ="com.mysql.jdbc.Driver";
     private final String jdbcURL = "jdbc:mysql://localhost/test";
@@ -43,7 +43,7 @@ public class JdbcTest {
  
          INSERT INTO test_table values (default, 'test text message');
          */
-        JdbcTest jdbc = new JdbcTest();
+        JdbcPrepareStatement jdbc = new JdbcPrepareStatement();
        // jdbc.readData();
         
         //jdbc.writeData("my test message");
