@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.rupp.sample.jdbc;
+package com.rupp.sample.jdbc.test;
 
 import java.sql.CallableStatement;
 import java.sql.Connection;
@@ -51,7 +51,7 @@ public class JdbcPrepareStatement {
        // jdbc.readData();
         long start = System.currentTimeMillis();
         for(int i=0; i<1500;i++) {
-            jdbc.writeData("my test message " + i);
+            jdbc.writeData("my test message -" + i);
         }
         System.out.println("time take :" + (System.currentTimeMillis() - start) + " millis");
         

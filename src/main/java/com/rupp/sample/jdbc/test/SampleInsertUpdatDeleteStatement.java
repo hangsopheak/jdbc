@@ -1,22 +1,18 @@
 /**
  * 
  */
-package com.rupp.sample.jdbc;
+package com.rupp.sample.jdbc.test;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.List;
-
-import com.rupp.sample.domain.TestDomain;
 
 /**
  * @author sopheamak
  *
  */
-public class SampleSqlSelect {
+public class SampleInsertUpdatDeleteStatement {
 
     private final String jdbcDriverStr ="com.mysql.jdbc.Driver";
     private final String jdbcURL = "jdbc:mysql://localhost/test";
@@ -48,71 +44,89 @@ public class SampleSqlSelect {
  
          INSERT INTO test_table values (default, 'test text message');
          */
-        SampleSqlSelect jdbc = new SampleSqlSelect();
-        jdbc.readData();
+        SampleInsertUpdatDeleteStatement jdbc = new SampleInsertUpdatDeleteStatement();
         
-        //jdbc.writeData("my test message");
-        
+        //insert record
+        jdbc.writeData("my test message");
+        //update
+        jdbc.upateData(2, "update my message");
+        //delete
+        jdbc.deleteRecord(2);
     }
- // SQL Select
-    public List<TestDomain> readData() throws Exception {
-        final List<TestDomain> list = new ArrayList<>();
+
+
+    public void writeData(String message) throws Exception {
         try {
             // load jdbc driver
             Class.forName(jdbcDriverStr);
             // load connection driver
             connection = DriverManager.getConnection(jdbcURL, username, pwd);
-            // create statement
+         // create statement
             statement = connection.createStatement();
-            // execute select statement
-            resultSet = statement.executeQuery("select * from test_table;");
-
-            // get result
-            while (resultSet.next()) {
-                Integer id = resultSet.getInt("id");
-                String message = resultSet.getString("message");
-                System.out.println("id:" + id + ", message:" + message);
-                //add TestDomain to List
-                list.add(new TestDomain(id, message));
-            }
+            
+            // insert sql using  statement
+            statement.execute("insert into test_table(message) values ('"+ message +"')");
+            
+            System.out.println("Insert record successfully");
         } catch (Exception e) {
             e.printStackTrace();
         }
         finally {
             close();
         }
-        return list;
     }
-
-    // SQL Select
-    public List<TestDomain> readDataFromDataSource() throws Exception {
-        final List<TestDomain> list = new ArrayList<>();
+    
+    /***
+     * update record table
+     * @param id
+     * @param message
+     * @throws Exception
+     */
+    public void upateData(int id, String message) throws Exception {
         try {
-            // get Connection from datasource
-            connection = DBCP2DataSourceUtils.getConnection();
-            // create statement
+            // load jdbc driver
+            Class.forName(jdbcDriverStr);
+            // load connection driver
+            connection = DriverManager.getConnection(jdbcURL, username, pwd);
+         // create statement
             statement = connection.createStatement();
-            // execute select statement
-            resultSet = statement.executeQuery("select * from test_table;");
-
-            // get result
-            while (resultSet.next()) {
-                Integer id = resultSet.getInt("id");
-                String message = resultSet.getString("message");
-                System.out.println("id:" + id + ", message:" + message);
-                //add TestDomain to List
-                list.add(new TestDomain(id, message));
-            }
-            //DBCP2DataSourceUtils.printDataSourceState();
+            
+            // insert sql using  statement
+            statement.execute("update test_table set message='"+ message +"' where id="+ id);
+            System.out.println("update record successfully");
         } catch (Exception e) {
             e.printStackTrace();
         }
         finally {
             close();
         }
-        return list;
     }
  
+    /***
+     * update record table
+     * @param id
+     * @param message
+     * @throws Exception
+     */
+    public void deleteRecord(int id) throws Exception {
+        try {
+            // load jdbc driver
+            Class.forName(jdbcDriverStr);
+            // load connection driver
+            connection = DriverManager.getConnection(jdbcURL, username, pwd);
+         // create statement
+            statement = connection.createStatement();
+            
+            // delete sql using  statement
+            int record = statement.executeUpdate("delete from test_table where id="+ id);
+            System.out.println("deleted : [" +record + "] record successfully");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        finally {
+            close();
+        }
+    }
     private void close(){
         try {
             if (resultSet != null) {

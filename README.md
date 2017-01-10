@@ -1,7 +1,7 @@
 # jdbc
-java with jdbc connection
+java with jdbc connection (CRUD operation)
  
-# Mysql sample with below database
+# Mysql sample with below Mysql database
 
 create new database name : test
 run the following sql in console
@@ -21,4 +21,22 @@ run the following sql in console
  
          INSERT INTO test_table values (default, 'test text message');
          
+    -- create procedure procedure
+    DELIMITER $$
+    
+    DROP PROCEDURE IF EXISTS `getMessage` $$
+    CREATE PROCEDURE `getMessage` 
+       (IN MY_ID INT, OUT MY_MESSAGE VARCHAR(255))
+    BEGIN
+       SELECT message INTO MY_MESSAGE
+       FROM test_table
+       WHERE id = MY_ID;
+    END $$
+    DELIMITER ;
 ```
+
+# Build project with maven + jetty server
+>> mvn clean jetty:run
+
+open browser : http://localhost:8080
+

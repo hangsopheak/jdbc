@@ -1,12 +1,11 @@
 /**
  * 
  */
-package com.rupp.sample.jdbc;
+package com.rupp.sample.jdbc.test;
 
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
@@ -24,7 +23,6 @@ public class JdbcCallableStatement {
     private Connection connection;
     private Statement statement;
     private ResultSet resultSet;
-    private PreparedStatement preparedStatement;
     private CallableStatement callableStatement;
  
     /**
@@ -112,6 +110,8 @@ public class JdbcCallableStatement {
             if (callableStatement != null) {
                 callableStatement.close();
             }
-        } catch(Exception e){}
+        } catch(Exception e){
+            e.printStackTrace();
+        }
     }
 }

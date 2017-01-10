@@ -32,7 +32,23 @@
         <servlet-name>ReadDataServlet</servlet-name>
         <url-pattern>/readDataServlet</url-pattern>
     </servlet-mapping>
-   
+   <servlet>
+        <servlet-name>InsertUpdateDataServlet</servlet-name>
+        <servlet-class>com.rupp.sample.servlet.InsertUpdateDataServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>InsertUpdateDataServlet</servlet-name>
+        <url-pattern>/updateDataServlet</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>DeleteDataServlet</servlet-name>
+        <servlet-class>com.rupp.sample.servlet.DeleteDataServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>DeleteDataServlet</servlet-name>
+        <url-pattern>/deleteDataServlet</url-pattern>
+    </servlet-mapping>
+    
     <servlet>
        <servlet-name>ErrorHandler</servlet-name>
        <servlet-class>com.rupp.sample.servlet.ErrorHandler</servlet-class>
