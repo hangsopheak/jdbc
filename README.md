@@ -40,3 +40,7 @@ run the following sql in console
 
 open browser : http://localhost:8080
 
+//return as json content
+
+http://localhost:8080/readDataServlet?type=json
+

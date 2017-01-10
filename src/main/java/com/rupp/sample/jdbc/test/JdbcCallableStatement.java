@@ -9,6 +9,8 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
+import sun.org.mozilla.javascript.internal.json.JsonParser;
+
 /**
  * @author sopheamak
  *
@@ -45,6 +47,7 @@ public class JdbcCallableStatement {
         
         //readMessageProcedure
         String message = jdbc.readMessageProcedure(2);
+        
         
         System.out.println("Message with id 2 is " + message);
     }

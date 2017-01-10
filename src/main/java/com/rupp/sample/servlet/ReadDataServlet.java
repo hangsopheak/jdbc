@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.rupp.sample.domain.TestDomain;
 import com.rupp.sample.jdbc.test.SampleSqlSelect;
 
@@ -27,6 +28,11 @@ public class ReadDataServlet extends HttpServlet {
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         System.out.println("=====ReadDataServlet.service method is called ====");
+        //json format?
+        if ("json".equals(request.getParameter("type"))) {
+            doGetAsJsonFormat(request, response);
+            return;
+        }
         //render to html page
        // Set response content type
         response.setContentType("text/html");
@@ -66,7 +72,24 @@ public class ReadDataServlet extends HttpServlet {
         }
       
     }
-
+    /**response as json content*/
+    private void doGetAsJsonFormat(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        final SampleSqlSelect sampleSqlSelect = new SampleSqlSelect();
+        try {
+            List<TestDomain> results = sampleSqlSelect.readDataFromDataSource();
+            ObjectMapper mapper = new ObjectMapper();
+            
+            
+            // Set response content type
+            response.setContentType("application/json");
+            response.setCharacterEncoding("utf-8");
+            PrintWriter out = response.getWriter();
+            mapper.writeValue(out, results);
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new ServletException("something is wrong with server " + e.getMessage());
+        }
+    }
     @Override
     public void destroy() {
         System.out.println("=====destroy method is called====");
