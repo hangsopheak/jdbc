@@ -1,5 +1,5 @@
 # jdbc
-java with jdbc connection (CRUD operation)
+java with jdbc connection (CRUD operation) using maven build
  
 # Mysql sample with below Mysql database
 

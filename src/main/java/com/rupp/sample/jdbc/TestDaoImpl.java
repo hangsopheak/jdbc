@@ -92,11 +92,12 @@ public class TestDaoImpl {
         try {
             // get Connection from datasource
             connection = DBCP2DataSourceUtils.getConnection();
-            // create statement
-            statement = connection.createStatement();
             // execute select statement
-            resultSet = statement.executeQuery("select * from test_table where id="+id);
-
+            preparedStatement = connection.prepareStatement("select * from test_table where id=?");
+            preparedStatement.setInt(1, id);
+            
+            resultSet = preparedStatement.executeQuery();
+            
             // get result
             if (resultSet.next()) {
                 String message = resultSet.getString("message");
@@ -121,7 +122,7 @@ public class TestDaoImpl {
             // create statement
             statement = connection.createStatement();
             // execute select statement
-            resultSet = statement.executeQuery("select * from test_table limit 100;");
+            resultSet = statement.executeQuery("select * from test_table");
 
             // get result
             while (resultSet.next()) {

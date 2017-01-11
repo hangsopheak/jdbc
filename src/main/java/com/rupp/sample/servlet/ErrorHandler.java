@@ -38,7 +38,7 @@ protected void service(HttpServletRequest request, HttpServletResponse response)
     if (throwable == null && statusCode == null){
        out.println("<h2>Error information is missing</h2>");
        out.println("Please return to the <a href=\"" + 
-         response.encodeURL("http://localhost:8080/servlet") + 
+         response.encodeURL("http://localhost:8080/") + 
          "\">Home Page</a>.");
     } else if(statusCode != 500){
         out.write("<h3>Error Details</h3>");

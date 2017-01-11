@@ -9,7 +9,11 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
-
+/**
+ * @author Sophea <a href='mailto:smak@dminc.com'> sophea </a>
+ * @version $id$ - $Revision$
+ * @date 2017
+ */
 public class TracerFilter implements Filter {
 
 	@Override

@@ -40,11 +40,11 @@ import org.slf4j.LoggerFactory;
  *   dealMade:end-ack 5004 micros. [5533 micros.]
  *   dealMade:end 402 micros. [5935 micros.]
  *
- * @author nphillips
+ * @author nphillips + sophea
  */
 public final class Tracer {
 	
-	static final long NANO_TO_MICRO = 1000L;
+	private static final long NANO_TO_MICRO = 1000L;
 
 	private static ThreadLocal<TracerLogger> context = new ThreadLocal<>();
 	
