@@ -66,7 +66,7 @@ public class SampleSqlSelect {
             // create statement
             statement = connection.createStatement();
             // execute select statement
-            resultSet = statement.executeQuery("select * from test_table;");
+            resultSet = statement.executeQuery("select * from test_table limit 500");
 
             // get result
             while (resultSet.next()) {
@@ -94,7 +94,7 @@ public class SampleSqlSelect {
             // create statement
             statement = connection.createStatement();
             // execute select statement
-            resultSet = statement.executeQuery("select * from test_table order by id desc;");
+            resultSet = statement.executeQuery("select * from test_table order by id desc limit 100 ;");
 
             // get result
             while (resultSet.next()) {
@@ -104,7 +104,7 @@ public class SampleSqlSelect {
                 //add TestDomain to List
                 list.add(new TestDomain(id, message));
             }
-            //DBCP2DataSourceUtils.printDataSourceState();
+            DBCP2DataSourceUtils.printDataSourceState();
         } catch (Exception e) {
             e.printStackTrace();
         }
