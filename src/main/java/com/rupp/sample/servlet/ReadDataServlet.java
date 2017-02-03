@@ -54,7 +54,9 @@ public class ReadDataServlet extends HttpServlet {
             
             //get records from database talbe
             //List<TestDomain> results = sampleSqlSelect.readDataFromDataSource();
-            List<TestDomain> results = "1".equals(dbType) ? sampleSqlSelect.readData() : sampleSqlSelect.readDataFromDataSource();
+            List<TestDomain> results = "1".equals(dbType) ?
+                    sampleSqlSelect.readData() : 
+                        sampleSqlSelect.readDataFromDataSource();
             out.print("<a href='edit.jsp'> create new</a>");
             out.print("<table width='500px' border='1'>");
             out.print("<tr bgcolor='gray'><td>Id</td><td>message</td><td>delete</td></tr>");

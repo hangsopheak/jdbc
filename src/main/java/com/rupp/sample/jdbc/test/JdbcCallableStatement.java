@@ -9,8 +9,6 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
-import sun.org.mozilla.javascript.internal.json.JsonParser;
-
 /**
  * @author sopheamak
  *
