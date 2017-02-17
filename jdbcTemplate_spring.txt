@@ -1,0 +1,75 @@
+
+Querying (SELECT)
+
+Here is a simple query for getting the number of rows in a relation:
+
+int rowCount = this.jdbcTemplate.queryForObject("select count(*) from t_actor", Integer.class);
+
+A simple query using a bind variable:
+
+int countOfActorsNamedJoe = this.jdbcTemplate.queryForObject(
+"select count(*) from t_actor where first_name = ?", Integer.class, "Joe");
+
+Querying for a String:
+
+String lastName = this.jdbcTemplate.queryForObject(
+"select last_name from t_actor where id = ?",
+new Object[]{1212L}, String.class);
+
+Querying and populating a single domain object:
+
+Actor actor = this.jdbcTemplate.queryForObject(
+"select first_name, last_name from t_actor where id = ?",
+new Object[]{1212L},
+new RowMapper<Actor>() {
+public Actor mapRow(ResultSet rs, int rowNum) throws SQLException {
+Actor actor = new Actor();
+actor.setFirstName(rs.getString("first_name"));
+actor.setLastName(rs.getString("last_name"));
+return actor;
+}
+});
+Querying and populating a number of domain objects:
+
+List<Actor> actors = this.jdbcTemplate.query(
+"select first_name, last_name from t_actor",
+new RowMapper<Actor>() {
+public Actor mapRow(ResultSet rs, int rowNum) throws SQLException {
+Actor actor = new Actor();
+actor.setFirstName(rs.getString("first_name"));
+actor.setLastName(rs.getString("last_name"));
+return actor;
+}
+});
+
+
+Updating (INSERT/UPDATE/DELETE) with jdbcTemplate
+
+You use the update(..) method to perform insert, update and delete operations. Parameter values are usually provided as var args or alternatively as an object array.
+
+this.jdbcTemplate.update(
+        "insert into t_actor (first_name, last_name) values (?, ?)",
+        "Leonor", "Watling");
+this.jdbcTemplate.update(
+        "update t_actor set last_name = ? where id = ?",
+        "Banjo", 5276L);
+this.jdbcTemplate.update(
+        "delete from actor where id = ?",
+        Long.valueOf(actorId));
+        
+        
+        
+JdbcTemplate best practices
+
+Instances of the JdbcTemplate class are threadsafe once configured. This is important because it means that you can configure a single instance of aJdbcTemplate and then safely inject this shared reference into multiple DAOs (or repositories). The JdbcTemplate is stateful, in that it maintains a reference to aDataSource, but this state is not conversational state.
+
+A common practice when using the JdbcTemplate class (and the associated NamedParameterJdbcTemplate classes) is to configure a DataSource in your Spring configuration file, and then dependency-inject that shared DataSource bean into your DAO classes; the JdbcTemplate is created in the setter for theDataSource. This leads to DAOs that look in part like the following:
+
+public class JdbcCorporateEventDao implements CorporateEventDao {
+private JdbcTemplate jdbcTemplate;
+public void setDataSource(DataSource dataSource) {
+this.jdbcTemplate = new JdbcTemplate(dataSource);
+}
+// JDBC-backed implementations of the methods on the CorporateEventDao follow...
+}
+https://www.mkyong.com/spring/spring-jdbctemplate-jdbcdaosupport-examples/

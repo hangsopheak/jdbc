@@ -10,7 +10,9 @@ package com.rupp.sample.domain;
 public class TestDomain {
     private Integer id;
     private String message;
-    
+    public TestDomain() {
+        
+    }
     public TestDomain(Integer id, String message) {
         this.id = id;
         this.message = message;
@@ -38,6 +40,10 @@ public class TestDomain {
      */
     public void setMessage(String message) {
         this.message = message;
+    }
+    
+    public String toString() {
+        return String.format("id : %s, message : %s", id, message);
     }
     
 }
